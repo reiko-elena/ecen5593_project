@@ -69,6 +69,9 @@
 #include "params/DerivO3CPU.hh"
 #include "sim/process.hh"
 
+#define SAT_ADDR_NUM  4096
+
+
 template <class>
 class Checker;
 class ThreadContext;
@@ -198,7 +201,8 @@ class FullO3CPU : public BaseO3CPU
          */
         virtual bool isSnooping() const { return true; }
     };
-
+    
+    
     /** The tick event used for scheduling CPU ticks. */
     EventFunctionWrapper tickEvent;
 
@@ -251,6 +255,17 @@ class FullO3CPU : public BaseO3CPU
     /** Destructor. */
     ~FullO3CPU();
 
+    //IDOLMA
+    Addr SATCache[SAT_ADDR_NUM];
+    void insert_SATCache(Addr safe_addr){
+        uint16_t idx = (safe_addr % SAT_ADDR_NUM);
+        SATCache[idx] = (safe_addr & ~7);
+    }
+    bool lookup_SATCache(Addr spec_addr){
+        uint16_t idx = (spec_addr % SAT_ADDR_NUM);
+        return ((spec_addr & ~7) == SATCache[idx]);
+    }
+
     /** Registers statistics. */
     void regStats() override;
 
@@ -275,6 +290,8 @@ class FullO3CPU : public BaseO3CPU
     {
         this->dtb->demapPage(vaddr, asn);
     }
+
+    
 
     /** Ticks CPU, calling tick() on each stage, and checking the overall
      *  activity to see if the CPU should deschedule itself.

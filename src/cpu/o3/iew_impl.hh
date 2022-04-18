@@ -1311,6 +1311,7 @@ DefaultIEW<Impl>::executeInsts()
 
             // Tell the LDSTQ to execute this instruction (if it is a load).
             if (inst->isLoad()) {
+                
                 // Loads will mark themselves as executed, and their writeback
                 // event adds the instruction to the queue to commit
                 fault = ldstQueue.executeLoad(inst);
@@ -1360,7 +1361,6 @@ DefaultIEW<Impl>::executeInsts()
                     // Send this instruction to commit, also make sure iew stage
                     // realizes there is activity.
                     inst->setExecuted();
-                    DPRINTF(IEW, "HAHAHAHHAHAHAHHAHAHAHAHHAHAHHA");
                     instToCommit(inst);
                     activityThisCycle();
                 }

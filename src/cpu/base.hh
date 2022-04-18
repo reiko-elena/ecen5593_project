@@ -614,6 +614,7 @@ class BaseCPU : public MemObject
         return total;
     }
 
+  
   public:
     // Number of CPU cycles simulated
     Stats::Scalar numCycles;

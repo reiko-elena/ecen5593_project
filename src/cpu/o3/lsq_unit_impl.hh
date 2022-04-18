@@ -282,6 +282,18 @@ LSQUnit<Impl>::regStats()
     dolmaCacheAccesses
         .name(name() + ".dolmaCacheAccesses")
         .desc("Number of DOLMA cache accesses");
+    
+    IdolmaCacheInsert
+        .name(name() + ".IdolmaCacheInsert")
+        .desc("Number of safe address cache inserts");
+    
+    IdolmaCacheHit
+        .name(name() + ".IdolmaCacheHit")
+        .desc("Number of safe address cache hits");
+    
+    IdolmaCacheLookup
+        .name(name() + ".IdolmaCacheLookup")
+        .desc("Number of safe address cache look up");
 
     lsqRescheduledLoads
         .name(name() + ".rescheduledLoads")
@@ -761,9 +773,10 @@ LSQUnit<Impl>::commitLoad()
             loadQueue[loadHead]->staticInst->disassemble( 
                                         loadQueue[loadHead]->instAddr() )
             );
-    
+    cpu->insert_SATCache(loadQueue[loadHead]->effAddr >> depCheckShift);
+    //cpu->insert_SATCache(0);
     loadQueue[loadHead] = NULL;
-
+    IdolmaCacheInsert++;
     incrLdIdx(loadHead);
 
     --loads;

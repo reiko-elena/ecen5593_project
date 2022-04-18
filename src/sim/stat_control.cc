@@ -154,6 +154,8 @@ Global::Global()
         .name("sim_ticks")
         .desc("Number of ticks simulated")
         ;
+    
+    
 
     finalTick
         .functor(statFinalTick)

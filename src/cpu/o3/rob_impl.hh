@@ -288,7 +288,7 @@ ROB<Impl>::insertInst(DynInstPtr &inst, IQ& instQueue, LSQ& lsq)
         if (!cpu->isDolmaMemOnly()) {
             for (InstIt it = instList[tid].begin(); it != end; ++it) {
                 if ((*it)->isControlInducer()) {
-                    inst->setControlRestricted();
+                    //inst->setControlRestricted();
                     break;
                 }
             }

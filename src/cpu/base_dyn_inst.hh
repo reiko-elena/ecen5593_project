@@ -76,6 +76,7 @@
  * Defines a dynamic instruction context.
  */
 
+
 template <class Impl>
 class BaseDynInst : public ExecContext, public RefCounted
 {
@@ -150,8 +151,12 @@ class BaseDynInst : public ExecContext, public RefCounted
         IsStrictlyOrdered,
         ReqMade,
         MemOpDone,
+        //IDOLMA
+        IsSATHit,
         MaxFlags
     };
+    
+
 
   public:
     /** The sequence number of the instruction. */
@@ -254,6 +259,8 @@ class BaseDynInst : public ExecContext, public RefCounted
     /* For metadata update after safe */
     uint8_t *validationData;
 
+   
+
     void setTotalStoreBufferHit()
     {
         status.set(TotalStoreBufferHit);
@@ -339,6 +346,8 @@ class BaseDynInst : public ExecContext, public RefCounted
     bool notAnInst() const { return instFlags[NotAnInst]; }
     void setNotAnInst() { instFlags[NotAnInst] = true; }
 
+    
+    
     ////////////////////////////////////////////
     //
     // INSTRUCTION EXECUTION
@@ -392,6 +401,11 @@ class BaseDynInst : public ExecContext, public RefCounted
      */
     bool possibleLoadViolation() const { return instFlags[PossibleLoadViolation]; }
     void possibleLoadViolation(bool f) { instFlags[PossibleLoadViolation] = f; }
+
+    //IDOLMA
+    bool isSATHit() const { return instFlags[IsSATHit]; }
+    void isSATHit(bool f) { instFlags[IsSATHit] = f; }
+
 
     /** True if the address hit a external snoop while sitting in the LSQ.
      * If this is true and a older instruction sees it, this instruction must
@@ -1227,7 +1241,7 @@ BaseDynInst<Impl>::initiateMemRead(Addr addr, unsigned size,
 
     return fault;
 }
-
+//IDOLMA: CHECK THIS 
 template<class Impl>
 Fault
 BaseDynInst<Impl>::writeMem(uint8_t *data, unsigned size, Addr addr,

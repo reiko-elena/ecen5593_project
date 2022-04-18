@@ -535,6 +535,11 @@ class LSQUnit {
     Stats::Scalar dolmaCacheBlocked;
     Stats::Scalar dolmaCacheAccesses;
 
+    //IDOLMA
+    Stats::Scalar IdolmaCacheInsert;
+    Stats::Scalar IdolmaCacheHit;
+    Stats::Scalar IdolmaCacheLookup;
+
   public:
 
     void dolmaLoad(DynInstPtr &load_inst);
@@ -692,9 +697,17 @@ LSQUnit<Impl>::read(const RequestPtr &req,
 
     // Check the SQ for any previous stores that might lead to forwarding
     int store_idx = load_inst->sqIdx;
-
+    
+    //IDOLMA
     int store_size = 0;
-
+    Addr spec_addr = load_inst->effAddr >> depCheckShift;
+    if(cpu->lookup_SATCache(spec_addr)){
+        load_inst->isSATHit(true);
+        IdolmaCacheHit++;
+    }
+    IdolmaCacheLookup++;
+   
+   //inittiaload
     DPRINTF(LSQUnit, "Read called, load idx: %i, store idx: %i, "
             "storeHead: %i addr: %#x%s\n",
             load_idx, store_idx, storeHead, req->getPaddr(),
@@ -1049,8 +1062,7 @@ LSQUnit<Impl>::read(const RequestPtr &req,
             dolmaCacheBlocked++;
             assert(!load_inst->isTotalStoreBufferHit());
             load_inst->setDolmaStalled();
-        }
-        else {
+        }else {
             // the cache only becomes blocked when misses are being handled
             // in DOLMA, we don't allocate any miss resources, so tainted
             // data doesn't cause the cache to become blocked

@@ -859,7 +859,7 @@ InstructionQueue<Impl>::scheduleReadyInsts()
         // instead of delay-on-miss
         // in reality, it would never reach here on real HW,
         // but our hack means we have to consider this case
-        if (cpu->isSTT() && issuing_inst->isDolmaRestricted() && issuing_inst->isLoad()) {
+        if (cpu->isSTT() && issuing_inst->isDolmaRestricted() && issuing_inst->isLoad() && !issuing_inst->isSATHit()) {
             assert(!issuing_inst->isDolmaStalled());
             readyInsts[op_class].pop();
 
@@ -1139,7 +1139,7 @@ InstructionQueue<Impl>::wakeDependentInstructions(DynInstPtr &completed_inst)
     // load PCs are handled as control inducers
     // we handle SSB for default mode during load execution;
     // here we handle conservative mode and unresolved branches in memory-only mode
-    if (cpu->isDolma() && !completed_inst->isControl() && !completed_inst->isDataInducer() && completed_inst->isLoad()) {
+    if (cpu->isDolma() && !completed_inst->isControl() && !completed_inst->isDataInducer() && completed_inst->isLoad() && !completed_inst->isSATHit()) {
         if (cpu->isDolmaConservative() || (!cpu->isSTT() && completed_inst->isPendingMemOrder())) {
             completed_inst->setDataInducer();
         }

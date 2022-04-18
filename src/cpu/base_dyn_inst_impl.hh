@@ -84,6 +84,7 @@ BaseDynInst<Impl>::BaseDynInst(const StaticInstPtr &_staticInst,
 
 template <class Impl>
 void
+//IDOMAL
 BaseDynInst<Impl>::initVars()
 {
     // DOLMA vars
