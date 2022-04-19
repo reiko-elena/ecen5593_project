@@ -281,14 +281,14 @@ ROB<Impl>::insertInst(DynInstPtr &inst, IQ& instQueue, LSQ& lsq)
     inst->setInROB();
 
     // DOLMA: set control restriction/inducer logic (data logic handled during broadcast)
-    if (cpu->isDolma() && !inst->isSquashed()) {
+    if (cpu->isDolma() && !inst->isSquashed() && !inst->isSATHit()) {
 
         InstIt end = instList[tid].end();
 
         if (!cpu->isDolmaMemOnly()) {
             for (InstIt it = instList[tid].begin(); it != end; ++it) {
                 if ((*it)->isControlInducer()) {
-                    //inst->setControlRestricted();
+                    inst->setControlRestricted();
                     break;
                 }
             }

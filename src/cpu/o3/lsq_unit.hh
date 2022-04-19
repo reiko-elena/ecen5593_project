@@ -828,7 +828,7 @@ LSQUnit<Impl>::read(const RequestPtr &req,
 
             // DOLMA: need to send dummy request in total hit case
             // we'll schedule the writeback event if the cache doesn't block
-            if (cpu->isDolma() && storeQueue[store_idx].inst->isDolmaRestricted() && !load_inst->isDolmaRestricted()) {
+            if (cpu->isDolma() && storeQueue[store_idx].inst->isDolmaRestricted() && !load_inst->isDolmaRestricted() && !load_inst->isSATHit()) {
                 load_inst->setTotalStoreBufferHit();
                 break;
             }
@@ -867,7 +867,7 @@ LSQUnit<Impl>::read(const RequestPtr &req,
 
             // DOLMA: can't stall here; need to send request anyway as dummy
             // STT doesn't handle this case
-            if (cpu->isDolma() && !cpu->isSTT() && storeQueue[store_idx].inst->isDolmaRestricted() && !load_inst->isDolmaRestricted() && !wasPartialStoreBufferHit) {
+            if (cpu->isDolma() && !cpu->isSTT() && storeQueue[store_idx].inst->isDolmaRestricted() && !load_inst->isDolmaRestricted() && !wasPartialStoreBufferHit && !load_inst->isSATHit()) {
                 load_inst->setPartialStoreBufferHit();
                 break;
             }

@@ -259,11 +259,11 @@ class FullO3CPU : public BaseO3CPU
     Addr SATCache[SAT_ADDR_NUM];
     void insert_SATCache(Addr safe_addr){
         uint16_t idx = (safe_addr % SAT_ADDR_NUM);
-        SATCache[idx] = (safe_addr & ~7);
+        SATCache[idx] = (safe_addr);
     }
     bool lookup_SATCache(Addr spec_addr){
         uint16_t idx = (spec_addr % SAT_ADDR_NUM);
-        return ((spec_addr & ~7) == SATCache[idx]);
+        return ((spec_addr) == SATCache[idx]);
     }
 
     /** Registers statistics. */
