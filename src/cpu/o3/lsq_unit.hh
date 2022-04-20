@@ -535,10 +535,7 @@ class LSQUnit {
     Stats::Scalar dolmaCacheBlocked;
     Stats::Scalar dolmaCacheAccesses;
 
-    //IDOLMA
-    Stats::Scalar IdolmaCacheInsert;
-    Stats::Scalar IdolmaCacheHit;
-    Stats::Scalar IdolmaCacheLookup;
+    
 
   public:
 
@@ -698,14 +695,18 @@ LSQUnit<Impl>::read(const RequestPtr &req,
     // Check the SQ for any previous stores that might lead to forwarding
     int store_idx = load_inst->sqIdx;
     
-    //IDOLMA
     int store_size = 0;
-    Addr spec_addr = load_inst->effAddr >> depCheckShift;
-    if(cpu->lookup_SATCache(spec_addr)){
-        load_inst->isSATHit(true);
-        IdolmaCacheHit++;
+    
+    //IDOLMA
+    if(cpu->isDolma()){
+        Addr spec_addr = load_inst->effAddr >> depCheckShift;
+        load_inst->isSATHit(false);
+        if(cpu->lookup_SATCache(spec_addr)){
+            load_inst->isSATHit(true);
+            cpu->IdolmaCacheHit++;
+        }
+        cpu->IdolmaCacheLookup++;
     }
-    IdolmaCacheLookup++;
    
    //inittiaload
     DPRINTF(LSQUnit, "Read called, load idx: %i, store idx: %i, "

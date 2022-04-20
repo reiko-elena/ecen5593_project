@@ -1241,7 +1241,7 @@ BaseDynInst<Impl>::initiateMemRead(Addr addr, unsigned size,
 
     return fault;
 }
-//IDOLMA: CHECK THIS 
+
 template<class Impl>
 Fault
 BaseDynInst<Impl>::writeMem(uint8_t *data, unsigned size, Addr addr,

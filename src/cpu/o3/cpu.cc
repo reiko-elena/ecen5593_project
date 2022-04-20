@@ -467,7 +467,6 @@ void
 FullO3CPU<Impl>::regStats()
 {
     BaseO3CPU::regStats();
-
     // Register any of the O3CPU's stats here.
     timesIdled
         .name(name() + ".timesIdled")

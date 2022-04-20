@@ -621,6 +621,7 @@ class BaseCPU : public MemObject
     Stats::Scalar numWorkItemsStarted;
     Stats::Scalar numWorkItemsCompleted;
 
+   
   private:
     std::vector<AddressMonitor> addressMonitor;
 

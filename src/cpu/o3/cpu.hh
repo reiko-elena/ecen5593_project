@@ -263,7 +263,7 @@ class FullO3CPU : public BaseO3CPU
     }
     bool lookup_SATCache(Addr spec_addr){
         uint16_t idx = (spec_addr % SAT_ADDR_NUM);
-        return ((spec_addr) == SATCache[idx]);
+        return (spec_addr== SATCache[idx]);
     }
 
     /** Registers statistics. */
@@ -802,6 +802,11 @@ class FullO3CPU : public BaseO3CPU
     Stats::Formula ipc;
     /** Stat for the total IPC. */
     Stats::Formula totalIpc;
+  
+    //IDOLMA
+    Stats::Scalar IdolmaCacheInsert;
+    Stats::Scalar IdolmaCacheHit;
+    Stats::Scalar IdolmaCacheLookup;
 
     //number of integer register file accesses
     Stats::Scalar intRegfileReads;
