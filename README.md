@@ -14,7 +14,7 @@ Ref: \
 # Instrution:
 To install the necessary dependencies on Ubuntu 20.04, run `./install_dependencies_ubuntu20.sh` from the repo's top level directory (requires sudo)
 
-To compile DOLMA, run `python2 $(which scons) -j$(nproc) build/X86_MESI_Two_Level/gem5.opt` from the repo's top level directory
+To compile DOLMA+SAT, run `python2 $(which scons) -j$(nproc) build/X86_MESI_Two_Level/gem5.opt` from the repo's top level directory
 
 Please go to `attacks` folder to for running attacks instructions
 
