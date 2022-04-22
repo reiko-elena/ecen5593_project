@@ -1,4 +1,3 @@
-
 echo "./main.py --target control_mem_btb_branch --mode 1"
 ./main.py --target control_mem_btb_branch --mode 1
 echo "./main.py --target control_mem_btb_branch --mode 2"

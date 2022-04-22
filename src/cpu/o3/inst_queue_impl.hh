@@ -911,7 +911,7 @@ InstructionQueue<Impl>::scheduleReadyInsts()
             idx = fuPool->getUnit(op_class, issuing_inst->seqNum);
             // STT doesn't need to protect issue port contention, because they ensure data oblivious execution
             // for tainted data
-            if (cpu->isDolma() && !cpu->isSTT() && idx == FUPool::NoFreeFU) {
+            if (cpu->isDolma() && !cpu->isSTT() && idx == FUPool::NoFreeFU && !issuing_inst->isSATHit() ) {
                 int fu_idx = fuPool->fuPerCapList[op_class].getFU();
                 int start_idx = fu_idx;
 
