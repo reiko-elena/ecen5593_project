@@ -804,6 +804,8 @@ class FullO3CPU : public BaseO3CPU
     Stats::Formula totalIpc;
   
     //IDOLMA
+    Stats::Formula SATHitRate;
+    Stats::Formula SATMissRate;
     Stats::Scalar IdolmaCacheInsert;
     Stats::Scalar IdolmaCacheHit;
     Stats::Scalar IdolmaCacheLookup;

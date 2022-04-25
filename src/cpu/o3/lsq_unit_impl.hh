@@ -769,7 +769,6 @@ LSQUnit<Impl>::commitLoad()
             cpu->insert_SATCache(safe_addr);
             cpu->IdolmaCacheInsert++;
         }
-        cpu->IdolmaCacheLookup++; 
     }
     
     

@@ -77,6 +77,8 @@ MinorStats::regStats(const std::string &name, BaseCPU &baseCpu)
         .precision(6);
     cpi = baseCpu.numCycles / numInsts;
 
+    
+
     ipc
         .name(name + ".ipc")
         .desc("IPC: instructions per cycle")

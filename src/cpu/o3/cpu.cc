@@ -508,6 +508,8 @@ FullO3CPU<Impl>::regStats()
         .precision(6);
     cpi = numCycles / committedInsts;
 
+    
+
     totalCpi
         .name(name() + ".cpi_total")
         .desc("CPI: Total CPI of All Threads")
@@ -525,6 +527,35 @@ FullO3CPU<Impl>::regStats()
         .desc("IPC: Total IPC of All Threads")
         .precision(6);
     totalIpc =  sum(committedInsts) / numCycles;
+    //IDOLMA
+    SATHitRate
+        .name(name() + ".SATHitRate")
+        .desc("SAT hit rate")
+        .precision(6);
+    SATHitRate = IdolmaCacheHit / IdolmaCacheLookup;
+
+    SATMissRate
+        .name(name() + ".SATMissRate")
+        .desc("SAT miss rate")
+        .precision(6);
+    SATMissRate = 1 - (IdolmaCacheHit / IdolmaCacheLookup);
+
+    IdolmaCacheInsert
+        .name(name() + ".SATwrite")
+        .desc("Number of SAT writes")
+        .prereq(IdolmaCacheInsert);
+    
+    IdolmaCacheLookup
+        .name(name() + ".SATRead")
+        .desc("Number of SAT Reads")
+        .prereq(IdolmaCacheLookup);
+
+
+    IdolmaCacheHit
+        .name(name() + ".SATHit")
+        .desc("Number of SAT Hits")
+        .prereq(IdolmaCacheHit);
+    
 
     this->fetch.regStats();
     this->decode.regStats();

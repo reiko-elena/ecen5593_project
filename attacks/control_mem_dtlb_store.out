@@ -1,9 +1,9 @@
 gem5 Simulator System.  http://gem5.org
 gem5 is copyrighted software; use the --copyright option for details.
 
-gem5 compiled Apr 21 2022 13:29:54
-gem5 started Apr 22 2022 12:43:48
-gem5 executing on ubuntu, pid 4017
+gem5 compiled Apr 25 2022 15:47:01
+gem5 started Apr 25 2022 15:48:03
+gem5 executing on ubuntu, pid 5355
 command line: ../build/X86_MESI_Two_Level/gem5.opt --debug-start=0 se_run_experiment.py --mem-type SimpleMemory --cmd bin/control_mem_dtlb_store --cpu-type DerivO3CPU --cpu-clock 2GHz --sys-clock 2GHz --l1d_size 32kB --l1d_assoc 8 --l1i_size 32kB --l1d_assoc 8 --l2_size 2MB --l2_assoc 16 --l2cache --caches --mode 2 --stt False
 
 Launching /home/jiabinlin/Desktop/ECEN5593/dolma/idolma/attacks/se_run_experiment.py:run_experiment:87
